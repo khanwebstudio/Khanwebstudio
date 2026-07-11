@@ -1,8 +1,11 @@
 import { useState } from 'react'
 
-const FORMSPREE_FORM_ID =
-  import.meta.env.VITE_FORMSPREE_FORM_ID || 'mrewzajz'
-const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`
+const FORMSPREE_FORM_ID = import.meta.env.VITE_FORMSPREE_FORM_ID
+const CONTACT_FORM_ENDPOINT =
+  import.meta.env.VITE_CONTACT_FORM_ENDPOINT ||
+  (FORMSPREE_FORM_ID
+    ? `https://formspree.io/f/${FORMSPREE_FORM_ID}`
+    : 'https://formspree.io/f/mrewzajz')
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const inquiryTips = [
@@ -36,11 +39,17 @@ function Contact() {
       return
     }
 
+    if (!CONTACT_FORM_ENDPOINT) {
+      setStatus('error')
+      setMessage('Contact form is not configured yet. Please use the email link instead.')
+      return
+    }
+
     setStatus('sending')
     setMessage('')
 
     try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
+      const response = await fetch(CONTACT_FORM_ENDPOINT, {
         method: 'POST',
         body: formData,
         headers: {
@@ -49,7 +58,9 @@ function Contact() {
       })
 
       if (!response.ok) {
-        throw new Error('Form submission failed')
+        const result = await response.json().catch(() => null)
+        const errorMessage = result?.errors?.[0]?.message || 'Form submission failed'
+        throw new Error(errorMessage)
       }
 
       form.reset()
@@ -57,7 +68,7 @@ function Contact() {
       setMessage('Thank you! Your message has been sent.')
     } catch {
       setStatus('error')
-      setMessage('Something went wrong. Please try again later.')
+      setMessage('Something went wrong. Please use the email link or try again later.')
     }
   }
 
@@ -117,10 +128,11 @@ function Contact() {
 
           <form
             className="contact-form"
-            action={FORMSPREE_ENDPOINT}
+            action={CONTACT_FORM_ENDPOINT || undefined}
             method="POST"
             onSubmit={handleSubmit}
           >
+            <input type="hidden" name="_subject" value="New K Studio brief" />
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
