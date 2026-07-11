@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+const FORMSPREE_FORM_ID =
+  import.meta.env.VITE_FORMSPREE_FORM_ID || 'mrewzajz'
+const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 const inquiryTips = [
   'Your business or product type',
   'The goal of the landing page',
@@ -7,11 +12,53 @@ const inquiryTips = [
 ]
 
 function Contact() {
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle')
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const name = String(formData.get('name') || '').trim()
+    const email = String(formData.get('email') || '').trim()
+    const userMessage = String(formData.get('message') || '').trim()
+
+    if (!name || !email || !userMessage) {
+      setStatus('error')
+      setMessage('Please fill in all required fields.')
+      return
+    }
+
+    if (!emailPattern.test(email)) {
+      setStatus('error')
+      setMessage('Please enter a valid email address.')
+      return
+    }
+
+    setStatus('sending')
+    setMessage('')
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json',
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error('Form submission failed')
+      }
+
+      form.reset()
+      setStatus('success')
+      setMessage('Thank you! Your message has been sent.')
+    } catch {
+      setStatus('error')
+      setMessage('Something went wrong. Please try again later.')
+    }
   }
 
   return (
@@ -68,7 +115,12 @@ function Contact() {
             </div>
           </div>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form
+            className="contact-form"
+            action={FORMSPREE_ENDPOINT}
+            method="POST"
+            onSubmit={handleSubmit}
+          >
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -92,7 +144,7 @@ function Contact() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="message">Project Brief</label>
+              <label htmlFor="message">Message</label>
               <textarea
                 id="message"
                 name="message"
@@ -101,15 +153,21 @@ function Contact() {
               />
             </div>
 
-            {submitted && (
-              <p className="form-success" role="status">
-                Brief received locally. Connect this form to Formspree, EmailJS,
-                or a backend endpoint before public launch.
+            {message && (
+              <p
+                className="form-success"
+                role={status === 'error' ? 'alert' : 'status'}
+              >
+                {message}
               </p>
             )}
 
-            <button type="submit" className="btn btn-primary">
-              Send Brief
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={status === 'sending'}
+            >
+              {status === 'sending' ? 'Sending...' : 'Send Brief'}
             </button>
           </form>
         </div>
