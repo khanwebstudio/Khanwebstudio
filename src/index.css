@@ -35,6 +35,10 @@ body {
   background-color: var(--white);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 #root {
   min-height: 100vh;
   display: flex;

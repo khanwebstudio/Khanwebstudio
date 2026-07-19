@@ -31,7 +31,7 @@ function About() {
         <span className="section-label">About</span>
         <h1 className="section-title">A focused studio for landing pages</h1>
         <p className="section-desc">
-          K Studio helps online businesses present their offer clearly and
+          Khan Studio helps online businesses present their offer clearly and
           professionally, especially when they need a landing page that can be
           launched quickly through Fiverr or Upwork.
         </p>

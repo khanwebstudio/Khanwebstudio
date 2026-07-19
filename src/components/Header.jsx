@@ -17,7 +17,7 @@ function Header() {
     <header className="header">
       <div className="container header-inner">
         <Link to="/" className="logo" onClick={closeMenu}>
-          K<span>Studio</span>
+          Khan<span>Studio</span>
         </Link>
 
         <button

@@ -132,7 +132,7 @@ function Contact() {
             method="POST"
             onSubmit={handleSubmit}
           >
-            <input type="hidden" name="_subject" value="New K Studio brief" />
+            <input type="hidden" name="_subject" value="New Khan Studio brief" />
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
