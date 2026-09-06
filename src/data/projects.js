@@ -1,5 +1,23 @@
 export const projects = [
   {
+    label: 'AI SaaS',
+    title: 'SignalDesk AI',
+    tags: ['Next.js', 'AI Dashboard', 'B2B SaaS'],
+    description:
+      'An interactive customer intelligence platform that turns feedback into AI insights, priority signals, reports, and accountable team actions.',
+    url: 'https://signaldesk-ai-mauve.vercel.app/dashboard',
+    theme: 'signaldesk',
+  },
+  {
+    label: 'Hospitality',
+    title: 'Lumière Restaurant',
+    tags: ['React', 'Reservations', 'Responsive'],
+    description:
+      'A refined modern European dining website built around seasonal storytelling, premium presentation, and an effortless reservation journey.',
+    url: 'https://rst1.vercel.app/',
+    theme: 'lumiere',
+  },
+  {
     label: 'SaaS',
     title: 'SaaS Waitlist Landing Page',
     tags: ['React', 'Lead Capture', 'SEO'],

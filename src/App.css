@@ -805,6 +805,22 @@
   background: var(--black);
 }
 
+.portfolio-thumb.signaldesk,
+.project-screenshot.signaldesk {
+  color: #c6f36a;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(198, 243, 106, 0.22), transparent 32%),
+    linear-gradient(135deg, #091511, #172c24);
+}
+
+.portfolio-thumb.lumiere,
+.project-screenshot.lumiere {
+  color: #f2e7d4;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(205, 167, 110, 0.3), transparent 35%),
+    linear-gradient(135deg, #201b17, #5a4635);
+}
+
 .portfolio-body {
   padding: 24px;
 }
@@ -1466,6 +1482,14 @@
   letter-spacing: -0.03em;
 }
 
+.project-preview-lines > span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .project-preview-lines i {
   display: block;
   width: 100%;
@@ -1511,6 +1535,29 @@
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.project-live-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 11px 15px;
+  color: var(--white);
+  background: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.project-live-link:hover {
+  color: var(--black);
+  background: var(--white);
+  transform: translateY(-2px);
 }
 
 .process-row {

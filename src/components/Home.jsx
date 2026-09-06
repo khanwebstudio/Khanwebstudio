@@ -38,6 +38,24 @@ const solutions = [
 
 const projects = [
   {
+    type: 'SignalDesk AI',
+    eyebrow: 'AI SaaS Platform',
+    goal: 'Turn scattered customer feedback into clear product and support priorities.',
+    solution: 'A connected B2B dashboard for feedback, AI insights, reports, and accountable actions.',
+    final: 'A polished interactive SaaS product demo built for portfolio and client presentations.',
+    url: 'https://signaldesk-ai-mauve.vercel.app/dashboard',
+    theme: 'signaldesk',
+  },
+  {
+    type: 'Lumière Restaurant',
+    eyebrow: 'Hospitality Website',
+    goal: 'Translate a premium dining experience into an elegant digital first impression.',
+    solution: 'Seasonal storytelling, refined visual hierarchy, and a clear online reservation journey.',
+    final: 'A responsive modern European restaurant website designed to inspire confident bookings.',
+    url: 'https://rst1.vercel.app/',
+    theme: 'lumiere',
+  },
+  {
     type: 'Service Business',
     goal: 'Turn local visitors into qualified booking requests.',
     solution: 'Clear offer hierarchy, trust blocks, and a frictionless inquiry path.',
@@ -313,15 +331,16 @@ function Home() {
             centered
           />
           <div className="featured-project-grid">
-            {projects.map(({ type, goal, solution, final }) => (
+            {projects.map(({ type, eyebrow, goal, solution, final, url, theme }) => (
               <article key={type} className="featured-project-card">
-                <div className="project-screenshot">
+                <div className={`project-screenshot ${theme || ''}`}>
                   <div className="project-window">
                     <span />
                     <span />
                     <span />
                   </div>
                   <div className="project-preview-lines">
+                    {eyebrow && <span>{eyebrow}</span>}
                     <strong>{type}</strong>
                     <i />
                     <i />
@@ -342,6 +361,11 @@ function Home() {
                     <strong>Final Website</strong>
                     {final}
                   </p>
+                  {url && (
+                    <a className="project-live-link" href={url} target="_blank" rel="noreferrer">
+                      View Live Project <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
