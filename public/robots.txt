@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kstudio.dev/sitemap.xml
+Sitemap: https://khanweb.studio/sitemap.xml
